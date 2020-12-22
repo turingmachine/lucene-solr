@@ -94,7 +94,7 @@ public abstract class CompoundWordTokenFilterBase extends TokenFilter {
       restoreState(current); // keep all other attributes untouched
       termAtt.setEmpty().append(token.txt);
       offsetAtt.setOffset(token.startOffset, token.endOffset);
-      posIncAtt.setPositionIncrement(0);
+      posIncAtt.setPositionIncrement(1);
       return true;
     }
 
