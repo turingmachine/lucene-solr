@@ -98,8 +98,15 @@ public abstract class CompoundWordTokenFilterBase extends TokenFilter {
       if (termAtt.length() >= this.minWordSize) {
         decompose();
 
-        // provided that we have sub-tokens, we don't want to write the original token into the output
-        if (!tokens.isEmpty()) {
+        // here we replace parts of the input string with the sub-tokens to see whether something remains
+        String inputString = termAtt.toString();
+        for (CompoundToken t: tokens) {
+          inputString = inputString.replace(t.txt, "");
+        }
+
+        // provided that we have sub-tokens and the input string is fully depleted, we don't want to
+        // write the original token into the output
+        if (inputString.length() == 0 && !tokens.isEmpty()) {
           return this.processSubtokens();
         } else {
           // only capture the state if we really need it for producing new tokens
